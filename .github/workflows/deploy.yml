@@ -1,5 +1,6 @@
 name: Deploy
 
+
 on:
   push:
     branches: [ "main" ]
@@ -25,7 +26,7 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
-        username: "ezambomsantana"
+        username: "saragocams"
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
     - name: Set up Docker Buildx
@@ -37,7 +38,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ezambomsantana/loja-ci:${{ github.sha }}
+        tags: saragocams/usuario-ci:${{ github.sha }}
 
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -47,6 +48,6 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop loja
-          docker rm --force loja
-          docker run -d -p 8081:8081 --name loja --network=rede ezambomsantana/loja-ci:${{ github.sha }}
+          docker stop usuario
+          docker rm --force usuario
+          docker run -d -p 8080:8080 --name usuario --network=rede saragocams/usuario-ci:${{ github.sha }}
