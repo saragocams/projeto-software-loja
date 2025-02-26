@@ -37,7 +37,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: saragocams/usuario-ci:${{ github.sha }}
+        tags: saragocams/loja-ci:${{ github.sha }}
 
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -47,6 +47,6 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop usuario
-          docker rm --force usuario
-          docker run -d -p 8080:8080 --name usuario --network=rede saragocams/usuario-ci:${{ github.sha }}
+          docker stop loja
+          docker rm --force loja
+          docker run -d -p 8080:8080 --name loja --network=rede saragocams/loja-ci:${{ github.sha }}
